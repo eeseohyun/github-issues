@@ -1,25 +1,13 @@
-import { Children } from "react";
 import styles from "./App.module.css";
-import Button from "./components/Button";
 import Header from "./Header.js";
-import Tabs from "./components/Tabs";
+import ListContainer from "./ListContainer";
 
 function App() {
 	return (
 		<>
 			<div className={styles.nav}>Nav</div>
 			<Header />
-			<div className={styles.listContainer}>
-				<Button
-					style={{
-						fontSize: "14px",
-						backgroundColor: "green",
-						color: "white",
-					}}
-				>
-					New Issue
-				</Button>
-			</div>
+			<ListContainer />
 			<div className={styles.footer}>Footer</div>
 		</>
 	);
