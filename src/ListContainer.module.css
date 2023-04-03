@@ -7,6 +7,7 @@
 .topSection {
 	display: flex;
 	flex-direction: space-between;
+	margin-bottom: 20px;
 }
 
 .input {
@@ -28,6 +29,7 @@
 .filterLists > span {
 	padding: 0 16px;
 	line-height: 21px;
+	color: rgba(87, 96, 106);
 }
 
 .listFilter {
@@ -36,4 +38,13 @@
 	background: rgba(246, 248, 250);
 	padding: 16px;
 	margin-top: 20px;
+}
+
+.selected {
+	font-weight: 800;
+}
+
+.textFilter {
+	margin-right: 8px;
+	cursor: pointer;
 }
