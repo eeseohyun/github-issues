@@ -5,9 +5,6 @@ import { useEffect, useState } from "react";
 export default function ListContainer() {
 	const [inputValue, setInputValue] = useState("is:issue is:open");
 
-	useEffect(() => {
-		console.log({ inputValue });
-	}, [inputValue]);
 	return (
 		<div className={styles.listContainer}>
 			<div className={styles.topSection}>
