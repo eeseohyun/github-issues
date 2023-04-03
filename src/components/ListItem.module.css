@@ -1,0 +1,29 @@
+.wrapper {
+	display: flex;
+	padding: 8px 16px;
+	border-top: 1px solid #d0d7de;
+	background: #ffffff;
+}
+
+.wrapper:hover {
+	background: rgba(246, 248, 250);
+}
+.checkbox {
+	margin-right: 15px;
+	margin-top: 5px;
+}
+.title {
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 24px;
+	margin-bottom: 4px;
+	cursor: pointer;
+}
+.title:hover {
+	color: #0969da;
+}
+
+.subTitle {
+	color: rgba(87, 96, 106);
+	font-size: 12px;
+}
