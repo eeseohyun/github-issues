@@ -29,7 +29,12 @@
 .filterLists > span {
 	padding: 0 16px;
 	line-height: 21px;
-	color: rgba(87, 96, 106);
+	color: #57606a;
+	cursor: pointer;
+}
+
+.filterLists > span:hover {
+	color: #000000;
 }
 
 .listFilter {
