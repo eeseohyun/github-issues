@@ -14,16 +14,17 @@ export default function ListContainer() {
 	const [checked, setChecked] = useState(false);
 	const [page, setPage] = useState(1);
 
-	async function getData() {
+	async function getData(pageParam) {
 		const { data } = await axios.get(
-			"https://api.github.com/repos/facebook/react/issues"
+			"https://api.github.com/repos/facebook/react/issues",
+			{ params: { page: pageParam } }
 		);
 		setList(data);
 	}
 
 	useEffect(() => {
-		getData();
-	}, []);
+		getData(page);
+	}, [page]);
 	// const data = getDate();
 	// const openedData = data.filter((d)=>d.state === 'open')
 	// const closedData = data.filter((d)=>d.state === 'closed')

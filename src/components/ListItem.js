@@ -1,6 +1,7 @@
 import styles from "./ListItem.module.css";
 import ListItemLayout from "./ListItemLayout";
 import Badge from "./Badge";
+import dayjs from "dayjs";
 
 export default function ListItem({
 	data,
@@ -9,6 +10,9 @@ export default function ListItem({
 	onClickTitle,
 }) {
 	const badges = data.labels;
+	const state = data.state === "open" ? "opened" : "closed";
+	const date = data.state === "open" ? data.created_at : data.closed_at;
+
 	return (
 		<ListItemLayout>
 			<div>
@@ -19,7 +23,9 @@ export default function ListItem({
 							<Badge key={idx} {...badgeProps} />
 						))}
 				</div>
-				<div className={styles.subTitle}># Description</div>
+				<div className={styles.subTitle}>
+					#{data.number} {state} Description
+				</div>
 			</div>
 		</ListItemLayout>
 	);
