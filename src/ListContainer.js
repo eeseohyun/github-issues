@@ -67,7 +67,6 @@ export default function ListContainer() {
 							data={item}
 							checked={checked}
 							onClickCheckBox={() => setChecked((checked) => !checked)}
-							badges={[{ color: "red", title: "bug" }]}
 						/>
 					))}
 				</div>
