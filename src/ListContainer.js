@@ -1,18 +1,29 @@
 import Button from "./components/Button";
 import styles from "./ListContainer.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ListItem from "./components/ListItem";
 import ListItemLayout from "./components/ListItemLayout";
 import ListFilter from "./components/ListFilter";
 import cx from "clsx";
 import Pagination from "./components/Pagination";
+import axios from "axios";
 
 export default function ListContainer() {
 	const [inputValue, setInputValue] = useState("is:issue is:open");
 	const [list, setList] = useState([]);
-	const [checkedList, setCheckedList] = useState([]);
+	const [checked, setChecked] = useState(false);
 	const [page, setPage] = useState(1);
 
+	async function getData() {
+		const { data } = await axios.get(
+			"https://api.github.com/repos/facebook/react/issues"
+		);
+		setList(data);
+	}
+
+	useEffect(() => {
+		getData();
+	}, []);
 	// const data = getDate();
 	// const openedData = data.filter((d)=>d.state === 'open')
 	// const closedData = data.filter((d)=>d.state === 'closed')
@@ -38,19 +49,26 @@ export default function ListContainer() {
 					</Button>
 				</div>
 				<OpenClosedFilters />
-				<ListItemLayout className={styles.listFilter}>
-					<ListFilter
-					// onChangeFilter={
-					// 	(filteredData) => {}
-					// 	//필터링된 요소에 맞게 데이터 불러오기
-					// 	//const data = getData('필터링된 정보')
-					// 	//setList(data)
-					// }
-					/>
-				</ListItemLayout>
 				<div className={styles.container}>
-					{list.map((listItem, idx) => (
-						<ListItem key={idx} badges={[{ color: "red", title: "bug" }]} />
+					<ListItemLayout className={styles.listFilter}>
+						<ListFilter
+						// onChangeFilter={
+						// 	(filteredData) => {}
+						// 	//필터링된 요소에 맞게 데이터 불러오기
+						// 	//const data = getData('필터링된 정보')
+						// 	//setList(data)
+						// }
+						/>
+					</ListItemLayout>
+
+					{list.map((item) => (
+						<ListItem
+							key={item.id}
+							data={item}
+							checked={checked}
+							onClickCheckBox={() => setChecked((checked) => !checked)}
+							badges={[{ color: "red", title: "bug" }]}
+						/>
 					))}
 				</div>
 			</div>
