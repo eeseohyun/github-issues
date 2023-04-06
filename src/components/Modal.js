@@ -14,14 +14,12 @@ export default function Modal({
 	const [filteredData, setFilteredData] = useState(searchDataList);
 
 	useEffect(() => {
-		//setFilteredData(searchDataList.filter((item) => item.some("...")));
-		//setFilteredData(["Apple"]);
 		setFilteredData(searchDataList.filter((item) => item === searchValue));
 	}, [searchDataList, searchValue]);
 	return (
 		<div className={cx(styles.modal, { [styles.opened]: opened })}>
 			<div className={styles.header}>
-				<span>{title}</span>
+				<span>Filter by {title}</span>
 				<button onClick={onClose}>x</button>
 			</div>
 			<div className={styles.input}>
