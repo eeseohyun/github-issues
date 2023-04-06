@@ -16,6 +16,7 @@ export default function ListContainer() {
 	const [checked, setChecked] = useState(false);
 	const [page, setPage] = useState(1);
 	const [isOpenMode, setIsOpenMode] = useState(true);
+	const [params, setParams] = useState();
 
 	async function getData(params) {
 		const { data } = await axios.get(
@@ -26,13 +27,9 @@ export default function ListContainer() {
 	}
 
 	useEffect(() => {
-		getData({ page, state: isOpenMode ? "open" : "closed" });
-	}, [page, isOpenMode]);
-	// const data = getDate();
-	// const openedData = data.filter((d)=>d.state === 'open')
-	// const closedData = data.filter((d)=>d.state === 'closed')
-	//const MAX_PAGE = getData().totalCount;
-	//totalCount 100 / 30  3.3333 4page까지는 나옴
+		getData({ page, state: isOpenMode ? "open" : "closed", ...params });
+	}, [page, isOpenMode, params]);
+
 	return (
 		<>
 			<div className={styles.listContainer}>
@@ -59,23 +56,21 @@ export default function ListContainer() {
 				<div className={styles.container}>
 					<ListItemLayout className={styles.listFilter}>
 						<ListFilter
-						// onChangeFilter={
-						// 	(filteredData) => {}
-						// 	//필터링된 요소에 맞게 데이터 불러오기
-						// 	//const data = getData('필터링된 정보')
-						// 	//setList(data)
-						// }
+							onChangeFilter={(params) => {
+								setParams(params);
+							}}
 						/>
 					</ListItemLayout>
 
-					{list.map((item) => (
-						<ListItem
-							key={item.id}
-							data={item}
-							checked={checked}
-							onClickCheckBox={() => setChecked((checked) => !checked)}
-						/>
-					))}
+					{list &&
+						list.map((item) => (
+							<ListItem
+								key={item.id}
+								data={item}
+								checked={checked}
+								onClickCheckBox={() => setChecked((checked) => !checked)}
+							/>
+						))}
 				</div>
 			</div>
 			<div className={styles.paginationContainer}>
