@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useSearchParams } from "react";
 import styles from "./ListContainer.module.css";
 import axios from "axios";
 
@@ -14,9 +14,12 @@ export default function ListContainer() {
 	const [inputValue, setInputValue] = useState("is:issue is:open");
 	const [list, setList] = useState([]);
 	const [checked, setChecked] = useState(false);
-	const [page, setPage] = useState(1);
 	const [isOpenMode, setIsOpenMode] = useState(true);
 	const [params, setParams] = useState();
+
+	const [searchParams, setSearchParams] = useSearchParams();
+	const page = parseInt(searchParams.get("page"), 10);
+	const maxPage = 10;
 
 	async function getData(params) {
 		const { data } = await axios.get(
@@ -75,9 +78,11 @@ export default function ListContainer() {
 			</div>
 			<div className={styles.paginationContainer}>
 				<Pagination
-					maxPage={10}
+					maxPage={maxPage}
 					currentPage={page}
-					onClickPageButton={(number) => setPage(number)}
+					onClickPageButton={(pageNumber) =>
+						setSearchParams({ page: pageNumber })
+					}
 				/>
 			</div>
 		</>

@@ -12,8 +12,6 @@ const tabList = [
 	{ name: "Security", pathname: "/security" },
 ];
 export default function Tabs() {
-	const [selectedTabIdx, setSelectedTabIdx] = useState(1);
-
 	const { pathname } = useLocation();
 
 	return (
@@ -22,23 +20,20 @@ export default function Tabs() {
 				<Tab
 					key={`${idx}`}
 					item={tab}
-					selected={pathname === tab.pathname}
-					onClick={() => setSelectedTabIdx(idx)}
+					//기본 홈을 issue페이지로 설젇
+					selected={(pathname === "/" ? "/issue" : pathname) === tab.pathname}
 				/>
 			))}
 		</ul>
 	);
 }
 
-function Tab({ item, selected, onClick, number }) {
+function Tab({ item, selected, number }) {
 	return (
 		<li>
 			{/* styles.selected가 true일 경우 변수 반환 */}
 			<Link to={item.pathname} className={styles.link}>
-				<button
-					onClick={onClick}
-					className={cx(styles.tab, { [styles.selected]: selected })}
-				>
+				<button className={cx(styles.tab, { [styles.selected]: selected })}>
 					<span>{item.name}</span>
 					{number && <div className={styles.circle}>{number}</div>}
 				</button>
