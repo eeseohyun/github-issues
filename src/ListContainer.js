@@ -1,4 +1,5 @@
-import { useState, useEffect, useSearchParams } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import styles from "./ListContainer.module.css";
 import axios from "axios";
 
@@ -14,12 +15,12 @@ export default function ListContainer() {
 	const [inputValue, setInputValue] = useState("is:issue is:open");
 	const [list, setList] = useState([]);
 	const [checked, setChecked] = useState(false);
-	const [isOpenMode, setIsOpenMode] = useState(true);
-	const [params, setParams] = useState();
+	//const [params, setParams] = useState();
 
 	const [searchParams, setSearchParams] = useSearchParams();
-	const page = parseInt(searchParams.get("page"), 10);
+	const page = parseInt(searchParams.get("page") ?? "1", 10);
 	const maxPage = 10;
+	const state = searchParams.get("state");
 
 	async function getData(params) {
 		const { data } = await axios.get(
@@ -30,8 +31,8 @@ export default function ListContainer() {
 	}
 
 	useEffect(() => {
-		getData({ page, state: isOpenMode ? "open" : "closed", ...params });
-	}, [page, isOpenMode, params]);
+		getData(searchParams);
+	}, [searchParams]);
 
 	return (
 		<>
@@ -53,14 +54,14 @@ export default function ListContainer() {
 					</Button>
 				</div>
 				<OpenClosedFilters
-					isOpenMode={isOpenMode}
-					onClickMode={setIsOpenMode}
+					isOpenMode={state !== "closed"} //아무런 값도 들어오지 않는 경우도 포함 !== 사용
+					onClickMode={(state) => setSearchParams({ state })}
 				/>
 				<div className={styles.container}>
 					<ListItemLayout className={styles.listFilter}>
 						<ListFilter
 							onChangeFilter={(params) => {
-								setParams(params);
+								setSearchParams(params);
 							}}
 						/>
 					</ListItemLayout>
