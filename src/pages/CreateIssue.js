@@ -1,47 +1,21 @@
 import styles from "./CreateIssue.module.css";
 import cx from "clsx";
-import { useRef, useState } from "react";
+import { useRef } from "react";
+import { useForm } from "../hooks";
 import Button from "../components/Button";
 import TextField from "../components/TextField";
 
 export default function CreateIssue() {
 	const inputRef = useRef();
 	const textareaRef = useRef();
-	const [inputValues, setInputValues] = useState({ title: "", body: "" });
-	const [errors, setErrors] = useState({});
-	const [isSubmitting, setIsSubmitting] = useState(false);
-
-	function handleSubmit(e) {
-		e.preventDefault();
-
-		setIsSubmitting(true);
-		const validateResult = validate(inputValues);
-		setErrors(validateResult);
-
-		const refs = { title: inputRef, body: textareaRef };
-		const errorKeys = Object.keys(validateResult);
-
-		if (errorKeys.length !== 0) {
-			const key = errorKeys[0];
-			alert(validateResult[key]);
-			refs[key].current.focus();
-			setIsSubmitting(false);
-			return;
+	const { isSubmitting, inputValues, onChange, errors, handleSubmit } = useForm(
+		{
+			initValues: { title: "", body: "" },
+			onSubmit: () => console.log("완료"),
+			validate,
+			refs: { title: inputRef, body: textareaRef },
 		}
-
-		if (errorKeys.length === 0) {
-			console.log("성공!");
-		}
-		// if (e.target.elements.title.value === "") {
-		// 	alert("타이틀을 입력해주세요.");
-		// 	ref.current.focus();
-		// }
-	}
-
-	function onChange(e) {
-		const { name, value } = e.target;
-		setInputValues({ ...inputValues, [name]: value });
-	}
+	);
 
 	return (
 		<div className={styles.container}>
