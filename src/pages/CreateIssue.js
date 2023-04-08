@@ -2,6 +2,7 @@ import styles from "./CreateIssue.module.css";
 import cx from "clsx";
 import { useRef } from "react";
 import Button from "../components/Button";
+import TextField from "../components/TextField";
 
 export default function CreateIssue() {
 	const ref = useRef();
@@ -18,17 +19,12 @@ export default function CreateIssue() {
 			<div className={styles.avatar}></div>
 			<div className={cx(styles.inputWrapper, styles.border)}>
 				<form onSubmit={handleSubmit}>
-					<input
-						name="title"
-						className={cx(styles.input, styles.border)}
-						placeholder="Title"
-						ref={ref}
-					></input>
-					<textarea
+					<TextField name="title" placeholder="Title" />
+					<TextField
+						type="textarea"
 						name="body"
-						className={cx(styles.input, styles.textarea, styles.border)}
-						placeholder="Leave a comment"
-					></textarea>
+						placeholder="Leave a Comment"
+					/>
 					<div className={styles.buttonWrapper}>
 						<Button
 							type="submit"
