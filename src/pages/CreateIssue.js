@@ -4,14 +4,25 @@ import { useRef } from "react";
 import { useForm } from "../hooks";
 import Button from "../components/Button";
 import TextField from "../components/TextField";
+import axios from "axios";
 
 export default function CreateIssue() {
 	const inputRef = useRef();
 	const textareaRef = useRef();
 	const { isSubmitting, inputValues, onChange, errors, handleSubmit } = useForm(
 		{
-			initValues: { title: "", body: "" },
-			onSubmit: () => console.log("완료"),
+			initialValues: { title: "", body: "" },
+			onSubmit: async () =>
+				await axios.post(
+					"https://api.github.com/repos/eeseohyun/github-issues/issues",
+					inputValues,
+					{
+						headers: {
+							Authorization: process.env.REACT_APP_GITHUB_TOKEN,
+							"Content-Type": "applications/json",
+						},
+					}
+				),
 			validate,
 			refs: { title: inputRef, body: textareaRef },
 		}
@@ -49,8 +60,7 @@ export default function CreateIssue() {
 							}}
 							disabled={isSubmitting}
 						>
-							{" "}
-							Submit new issue{" "}
+							Submit new issue
 						</Button>
 					</div>
 				</form>

@@ -6,7 +6,7 @@ export function useForm({
 	refs,
 	onSuccess, //성공 시 뭐할건데
 	onErrors, //에러 시 어떡할건데
-	onSubmit, //값이 전달될때는 어떤 함수를 호출해야해?
+	onSubmit, //값이 전달될때는 어떤 함수/네트워크를 호출해야해?
 }) {
 	const [inputValues, setInputValues] = useState(initialValues);
 	const [errors, setErrors] = useState({});
@@ -17,7 +17,7 @@ export function useForm({
 		setInputValues({ ...inputValues, [name]: value });
 	}
 
-	function handleSubmit(e) {
+	async function handleSubmit(e) {
 		e.preventDefault();
 		setIsSubmitting(true);
 
@@ -34,7 +34,7 @@ export function useForm({
 			return;
 		}
 		if (errorKeys.length === 0) {
-			onSubmit();
+			await onSubmit();
 			return;
 		}
 	}
