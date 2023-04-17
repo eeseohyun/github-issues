@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useQuery } from "react-query";
+import axios from "axios";
 
 export function useForm({
 	validate,
@@ -51,4 +53,17 @@ export function useForm({
 		errors,
 		handleSubmit,
 	};
+}
+
+async function getUserInfo() {
+	const data = await axios.get("https://api.github.com/user", {
+		headers: {
+			Authorization: process.env.REACT_APP_GITHUB_TOKEN,
+			"Content-Type": "application/json",
+		},
+	});
+	return data.data;
+}
+export function useUser() {
+	return useQuery(["userInfo"], () => getUserInfo(), { staleTime: "Infinity" });
 }
